@@ -42,8 +42,8 @@ class Reservation(models.Model):
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, blank=True)
     e_mail = models.EmailField()
     date_create = models.DateTimeField()
-    date_check_in = models.DateTimeField()
-    date_check_out = models.DateTimeField()
+    dateandtime_check_in = models.DateTimeField()
+    dateandtime_check_out = models.DateTimeField()
     notes = models.CharField(max_length=40, blank=True)
 
 
@@ -53,10 +53,13 @@ class Cleaning(models.Model):
     number_phone = models.IntegerField()
 
 
+class Schedule(Reservation):
+    class Meta:
+        proxy = True
 
 
 '''Schedule
-	Информация берется из Reservation и других сущностей, т.е отдельная таблица в бд не создается
+Информация берется из Reservation и других сущностей, т.е отдельная таблица в бд не создается
 День и месяц (Например 18 Mon)
 Время (приезда или выезда, зависит от след столбца)
 Событие (выезд или приезд)
@@ -64,4 +67,5 @@ class Cleaning(models.Model):
 Количество ночей
 Номер квартиры и название отеля (например Hotel Five Stars, 431)
 ID резервации (плюс ссылка на саму резервацию)
-Дропдаун для выбора человека на уборку'''
+Дропдаун для выбора человека на уборку
+'''

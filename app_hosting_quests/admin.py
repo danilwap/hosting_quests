@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Hotel, Room, Guest, Reservation, Cleaning
-from datetime import datetime
+from .models import Hotel, Room, Guest, Reservation, Cleaning, Schedule
+
 
 # Register your models here.
 @admin.register(Hotel)
@@ -22,13 +22,12 @@ class Guest_Admin(admin.ModelAdmin):
 
 @admin.register(Reservation)
 class Reservation_Admin(admin.ModelAdmin):
-    list_display = ['number_kvartira', 'vol_guest', 'status', 'e_mail', 'date_create', 'date_check_in',
-                    'date_check_out', 'vol_day', 'notes']
+    list_display = ['number_kvartira', 'vol_guest', 'status', 'e_mail', 'date_create', 'dateandtime_check_in',
+                    'dateandtime_check_out', 'vol_day', 'notes']
     list_editable = ['status']
 
-
     def vol_day(self, reservation):
-        result = str(reservation.date_check_out - reservation.date_check_in)[:6]
+        result = str(reservation.dateandtime_check_in - reservation.dateandtime_check_out)[:6]
         return result
 
 
@@ -37,5 +36,10 @@ class Cleaning_Admin(admin.ModelAdmin):
     list_display = ['name', 'lastname', 'number_phone']
 
 
+@admin.register(Schedule)
 class Schedule_Admin(admin.ModelAdmin):
-    list_display = ['name', 'lastname', 'number_phone']
+    list_display = ['dateandtime_check_in']
+
+    def dateandtime_check_in(self, schedule):
+        result = schedule.dateandtime_check_in
+        return result
